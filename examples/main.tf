@@ -51,13 +51,13 @@ data "azurerm_kubernetes_cluster" "aks" {
 module "grafana" {
   source = "../"
 
-  grafana_name      = "my-grafana"
-  namespace         = "monitoring"
-  azure_tenant_id   = data.azurerm_client_config.current.tenant_id
-  grafana_domain    = "grafana.yourdomain.com"
-  admin_email       = "admin@yourdomain.com"
-  storage_size      = "20Gi"
-  ingress_class     = "nginx"
+  grafana_name       = "my-grafana"
+  namespace          = "monitoring"
+  azure_tenant_id    = data.azurerm_client_config.current.tenant_id
+  grafana_domain     = "grafana.yourdomain.com"
+  admin_email        = "admin@yourdomain.com"
+  storage_size       = "20Gi"
+  ingress_class      = "nginx"
   enable_persistence = true
 
   tags = {

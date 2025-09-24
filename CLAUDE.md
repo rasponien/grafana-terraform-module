@@ -19,23 +19,34 @@ The key integration point is the `grafana_values` local that translates module v
 
 ## Common Commands
 
+The project includes a comprehensive Makefile for all Terraform operations. Use these commands for development:
+
 ```bash
-# Initialize and validate the module
-terraform init
-terraform validate
-terraform fmt
+# Full validation workflow (recommended for all changes)
+make check
 
-# Plan and apply (from examples/ directory)
-cd examples/
-terraform plan
-terraform apply
+# Individual operations
+make init           # Initialize Terraform
+make validate       # Validate configuration
+make format         # Format Terraform files
+make security       # Run security scan
+make plan           # Create execution plan
+make apply          # Apply changes
+make destroy        # Destroy resources
 
-# Test the module locally
-terraform plan -var="azure_tenant_id=your-tenant-id" -var="grafana_domain=grafana.local" -var="admin_email=admin@local"
+# Environment-specific workflows
+make dev            # Development workflow
+make staging        # Staging workflow
+make prod           # Production workflow (with extra safety)
 
-# Destroy resources
-terraform destroy
+# Utility commands
+make status         # Show current status
+make clean          # Clean temporary files
+make backup         # Backup state files
+make help           # Show all available targets
 ```
+
+**IMPORTANT: Always run `make check` before committing changes to ensure code quality and security.**
 
 ## Key Configuration Points
 
@@ -52,3 +63,16 @@ terraform destroy
 - Azure subscription with appropriate permissions for creating AD applications
 
 The module expects to be consumed as a child module, not executed directly. See `examples/main.tf` for proper usage patterns.
+
+## Development Workflow for Claude Code
+
+When making ANY changes to Terraform files, ALWAYS run validation checks using the Makefile:
+
+1. **After editing any .tf file**: `make check`
+2. **Before committing changes**: `make check`
+3. **Quick validation during development**: `make validate format`
+4. **Security check**: `make security`
+
+The `make check` command runs the complete workflow: init → validate → format → security → plan
+
+This ensures code quality, security compliance, and prevents deployment issues.
